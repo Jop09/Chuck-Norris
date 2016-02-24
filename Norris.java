@@ -5,20 +5,24 @@ import java.util.* ;
 public class Norris {
 
 
-	public static void main(String[] args) {
+	public static String asciiUmwandlung(String text){
 
-		Scanner scanner = new Scanner(System.in);
-	    String text = scanner.nextLine();		// Zeichenkette einlesen über scanner
-	    scanner.close();
 		String ascii = "";						// String zum speichern des ASCII Code
-		String ausgabe = "";					// String für die Ausgabe des "Norris-Code"
-		boolean Null = true;					// Variable zum festlegen ob aktuell eine Null-Kette vorliegt oder eine Eins-Kette
 
-	    for(int i=0; i<text.length(); i++) {	// eingelesenen Text durchgehen und in ASCII umwandeln
+		for(int i=0; i<text.length(); i++) {	// eingelesenen Text durchgehen und in ASCII umwandeln
 	    	ascii += (Integer.toBinaryString(text.charAt(i)));
 	    }
 
-	    if(ascii.charAt(0)=='1') {				// erstes Zeichen definieren und Null-Variable für den Start setzen
+		return ascii;
+	}
+
+
+	public static String NorrisCode(String ascii){
+
+		String ausgabe = "";					// String für die Ausgabe des "Norris-Code"
+		boolean Null = true;					// Variable zum festlegen ob aktuell eine Null-Kette vorliegt oder eine Eins-Kette
+
+		if(ascii.charAt(0)=='1') {				// erstes Zeichen definieren und Null-Variable für den Start setzen
 			ausgabe += "0 ";
 	    	Null = false;
 	    }
@@ -48,6 +52,24 @@ public class Norris {
 	    	}
 
 	    }
+
+	    return ausgabe;
+	}
+
+
+
+	public static void main(String[] args) {
+
+		Scanner scanner = new Scanner(System.in);
+	    String text = scanner.nextLine();		// Zeichenkette einlesen über scanner
+	    scanner.close();
+		String ascii = "";						// String zum speichern des ASCII Code
+		String ausgabe = "";					// String für die Ausgabe des "Norris-Code"
+
+	    ascii = asciiUmwandlung(text);
+
+
+	    ausgabe = NorrisCode(ascii);
 
 		System.out.println(ausgabe);
 	}
