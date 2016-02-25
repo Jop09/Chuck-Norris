@@ -1,77 +1,58 @@
 package NorrisCoding;
 
-import java.util.* ;
 
 public class Norris {
 
 
-	public static String asciiUmwandlung(String text){
+	public static String addZeros(String ascii){
 
-		String ascii = "";						// String zum speichern des ASCII Code
+		int asciiLength = ascii.length();
+		for(int i = 0; i < 7 - asciiLength; i++) {
+			ascii = "0" + ascii;
+		}
+		return ascii;
+	}
 
-		for(int i=0; i<text.length(); i++) {	// eingelesenen Text durchgehen und in ASCII umwandeln
-	    	ascii += (Integer.toBinaryString(text.charAt(i)));
-	    }
+	public static String createAsciiCode(String text) {
+
+		String ascii = "";
+
+		for (int i = 0; i < text.length(); i++) {
+			ascii += addZeros(Integer.toBinaryString(text.charAt(i)));
+		}
 
 		return ascii;
 	}
 
+	public static String createChuckNorrisCode(String ascii) {
 
-	public static String NorrisCode(String ascii){
+		String chuckNorrisCode = "";
 
-		String ausgabe = "";					// String für die Ausgabe des "Norris-Code"
-		boolean Null = true;					// Variable zum festlegen ob aktuell eine Null-Kette vorliegt oder eine Eins-Kette
+		if (ascii.length() == 0)
+			return "";
+		char first = ascii.charAt(0);
+		chuckNorrisCode += createStartPattern(ascii, 0, first);
 
-		if(ascii.charAt(0)=='1') {				// erstes Zeichen definieren und Null-Variable für den Start setzen
-			ausgabe += "0 ";
-	    	Null = false;
-	    }
-		else {
-			ausgabe += "00 ";
-	    	Null = true;
+		for (int j = 1; j < ascii.length(); j++) {
+
+			if (ascii.charAt(j) == first) {
+				chuckNorrisCode += "0";
+			} else {
+				chuckNorrisCode += " ";
+				first = ascii.charAt(j);
+				chuckNorrisCode += createStartPattern(ascii, j, first);
+			}
+
 		}
-
-
-	    for(int j=0; j<ascii.length(); j++) {	// ASCII Zeichenkette durchgehen und je nach Abhängigkeit von gefundenem Zeichen und Wert der Null-Variable die entsprechenden Zeichen in der ausgabe setzen
-
-	    	if(Null){
-	    		if(ascii.charAt(j)=='0')
-	    			ausgabe += "0";
-	    		else {
-	    			ausgabe += " 0 0";
-	    			Null = false;
-	    		}
-	    	}
-	    	else {
-	    		if(ascii.charAt(j)=='1')
-	    			ausgabe += "0";
-	    		else {
-	    			ausgabe += " 00 0";
-	    			Null = true;
-	    		}
-	    	}
-
-	    }
-
-	    return ausgabe;
+		return chuckNorrisCode;
 	}
 
-
-
-	public static void main(String[] args) {
-
-		Scanner scanner = new Scanner(System.in);
-	    String text = scanner.nextLine();		// Zeichenkette einlesen über scanner
-	    scanner.close();
-		String ascii = "";						// String zum speichern des ASCII Code
-		String ausgabe = "";					// String für die Ausgabe des "Norris-Code"
-
-	    ascii = asciiUmwandlung(text);
-
-
-	    ausgabe = NorrisCode(ascii);
-
-		System.out.println(ausgabe);
+	public static String createStartPattern(String ascii, int index, char first) {
+		if (first == '1') {
+			return "0 0";
+		} else {
+			return "00 0";
+		}
 	}
 
 
