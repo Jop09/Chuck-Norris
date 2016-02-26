@@ -6,6 +6,10 @@ public class Norris {
 
 	private Norris(){}
 
+	/**
+	 * @param ascii
+	 * @return
+	 */
 	public static String addZeros(String ascii){
 
 		int asciiLength = ascii.length();
